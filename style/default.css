@@ -35,6 +35,11 @@ body {
   align-items: flex-end;
 }
 
+#results {
+  font-size: xx-large;
+  margin: 8px;
+}
+
 .body {
   padding: 8px;
   flex: 0;

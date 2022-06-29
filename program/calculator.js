@@ -25,3 +25,10 @@ function operate(imput){
   if (operand == '*') {return multiply(numbers[0], numbers[1])};
   if (operand == '/') {return divide(numbers[0], numbers[1])};
 }
+
+
+let results = document.querySelector('#results');
+let buttons = document.querySelector('.numbers');
+buttons.addEventListener('click', (e)=>{
+  results.textContent += e.target.textContent;
+});
