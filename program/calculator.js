@@ -28,12 +28,14 @@ function operate(imput){
 
 
 let results = document.querySelector('#results');
-let buttons = document.querySelector('.numbers');
+let buttons = document.querySelector('.body');
 buttons.addEventListener('click', (e)=>{
+  if (e.target.nodeName == 'DIV'){return};
   results.textContent += e.target.textContent;
   if (results.textContent.length > 16){
     results.textContent = results.textContent.slice(1, 18);
   }
 });
+
 
 
