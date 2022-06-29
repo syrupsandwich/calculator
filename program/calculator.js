@@ -37,5 +37,10 @@ buttons.addEventListener('click', (e)=>{
   }
 });
 
+let clearbtn = document.querySelector('#clear');
+clearbtn.addEventListener('dblclick', (e)=>{
+  results.textContent = '';
+});
+
 
 
