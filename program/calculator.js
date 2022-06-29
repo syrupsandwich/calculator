@@ -31,4 +31,9 @@ let results = document.querySelector('#results');
 let buttons = document.querySelector('.numbers');
 buttons.addEventListener('click', (e)=>{
   results.textContent += e.target.textContent;
+  if (results.textContent.length > 16){
+    results.textContent = results.textContent.slice(1, 18);
+  }
 });
+
+

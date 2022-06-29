@@ -17,6 +17,7 @@ body {
   border: 1px outset rgb(165, 165, 165);
   border-radius: 2px;
   background-color: rgb(138, 138, 138);
+  width: 268px;
 }
 
 .head {
