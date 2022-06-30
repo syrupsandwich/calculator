@@ -33,12 +33,18 @@ body {
   background-color: inherit;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+}
+
+.display-buttons {
+  display: flex;
+  justify-content: space-between;
 }
 
 #results {
   font-size: xx-large;
   margin: 8px;
+  height: 37px;
+  text-align: right;
 }
 
 .body {
@@ -69,3 +75,8 @@ button {
   color: whitesmoke;
   background-color: inherit;
 }
+
+#clear,
+#backspace {
+  border: none;
+} 
