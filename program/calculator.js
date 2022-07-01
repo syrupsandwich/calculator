@@ -19,18 +19,17 @@ function operate(input){
   let operator = Array.from(`${input}`).find((a)=>(checkIfOperator(a)));
   let numbers = `${input}`.split(`${operator}`);
   if (operator == '+') { return add(numbers[0], numbers[1])};
-  if (operator == '-') {return subtract(numbers[0], numbers[1])};
-  if (operator == '&#215;' || operator == '×') {return multiply(numbers[0], numbers[1])};
-  if (operator == '/') {return divide(numbers[0], numbers[1])};
+  if (operator == '−') {return subtract(numbers[0], numbers[1])};
+  if (operator == '×') {return multiply(numbers[0], numbers[1])};
+  if (operator == '÷') {return divide(numbers[0], numbers[1])};
 }
 
 function checkIfOperator(a){
   return (
     a == '+' ||
-    a == '-' ||
-    a == '&#215;' ||
+    a == '−' ||
     a == '×'||
-    a == '/');
+    a == '÷');
 }
 
 let results = document.querySelector('#results');
