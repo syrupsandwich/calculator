@@ -34,22 +34,30 @@ function checkIfOperator(a){
 
 let results = document.querySelector('#results');
 let buttons = document.querySelector('.body');
+let expression = [];
 
 buttons.addEventListener('click', (e)=>{
-
-  let expression = Array.from(results.textContent);
-  if (checkIfOperator(e.target.textContent)
-   && checkIfOperator(expression.slice(-1))){
-    results.textContent = expression.slice(0, -1).join('');
-    results.textContent += e.target.textContent;
-    return;
-  }
-
+  //ignore the button container
   if (e.target.nodeName == 'DIV'){return};
-  results.textContent += e.target.textContent;
-  if (results.textContent.length > 16){
-    results.textContent = results.textContent.slice(1, 18);
+
+  expression.push(e.target.textContent);
+
+  //if input is an operator
+  //and last index is an operator
+  if (checkIfOperator(e.target.textContent)
+  && checkIfOperator(expression.slice(-1))){
+    expression.pop();
+    expression.push(e.target.textContent);
   }
+  
+  //if user inputs a second operator,
+  //replace the first part of the expression with its solution
+  if(expression.filter((a)=>checkIfOperator(a)).length == 2){
+    expression = [...operate(expression.slice(0, -1).join('')) + expression.pop()];
+  }
+  
+  //display the input
+  results.textContent = expression.join('');
   
 });
 
