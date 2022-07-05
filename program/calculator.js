@@ -18,7 +18,7 @@ function divide(a, b){
 function operate(input){
   let operator = Array.from(`${input}`).find((a)=>(checkIfOperator(a)));
   let numbers = `${input}`.split(`${operator}`);
-  if (operator == '+') { return add(numbers[0], numbers[1])};
+  if (operator == '+') {return add(numbers[0], numbers[1])};
   if (operator == '−') {return subtract(numbers[0], numbers[1])};
   if (operator == '×') {return multiply(numbers[0], numbers[1])};
   if (operator == '÷') {return divide(numbers[0], numbers[1])};
@@ -28,7 +28,7 @@ function checkIfOperator(a){
   return (
     a == '+' ||
     a == '−' ||
-    a == '×'||
+    a == '×' ||
     a == '÷');
 }
 
@@ -57,8 +57,7 @@ buttons.addEventListener('click', (e)=>{
   //make equals solve a two term expression
   if(checkExpression(expression)
   && e.target.textContent == '='){
-    console.log(expression)
-    results.textContent = [operate(expression.join(''))];
+    results.textContent = [Math.round(operate(expression.join('')) * 100) / 100];
     expression = [...results.textContent + '='];
     return;
   }
@@ -68,7 +67,8 @@ buttons.addEventListener('click', (e)=>{
   //if user inputs a second operator,
   //replace the first part of the expression with its solution
   if(expression.filter((a)=>checkIfOperator(a)).length == 2){
-    expression = [...operate(expression.slice(0, -1).join('')) + expression.pop()];
+    expression = [...Math.round(operate(expression.slice(0, -1).join('')) * 100) / 100
+    + expression.pop()];
   }
   
   //display the input
