@@ -83,6 +83,13 @@ clearBtn.addEventListener('dblclick', (e)=>{
   expression = [];
 });
 
+let backSpaceBtn = document.querySelector('#backspace');
+
+backSpaceBtn.addEventListener('click', (e)=>{
+  results.textContent = results.textContent.slice(0, -1);
+  expression = Array.from(results.textContent)
+})
+
 function checkExpression(array){
   let operator = array.find((a)=>(checkIfOperator(a)));
   let numbers = `${array}`.split(`${operator}`);
