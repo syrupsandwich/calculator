@@ -40,26 +40,30 @@ buttons.addEventListener('click', (e)=>{
   //ignore the button container
   if (e.target.nodeName == 'DIV'){return};
 
-  //if display value is strictly a two term expression
-  //and the equals button is pressed,
-  //just solve the expression
-  if(checkExpression(expression)
-  && e.target.textContent == '='){
-    console.log(expression)
-    results.textContent = [operate(expression.join(''))];
-    expression = [];
-    return;
-  }
+  //clear the display after a finished calculation
+  if(expression.slice(-1) == '=' && e.target.className == 'num'){expression = []};
+  //allow user to work with previous value
+  if(expression.slice(-1) == '=' && checkIfOperator(e.target.textContent)){expression.pop()};
 
-  expression.push(e.target.textContent);
-
-  //if input is an operator
-  //and last index is an operator
+  //prevent repeated input of operators
   if (checkIfOperator(e.target.textContent)
   && checkIfOperator(expression.slice(-1))){
     expression.pop();
     expression.push(e.target.textContent);
+    results.textContent = expression.join('');
+    return;
   }
+
+  //make equals solve a two term expression
+  if(checkExpression(expression)
+  && e.target.textContent == '='){
+    console.log(expression)
+    results.textContent = [operate(expression.join(''))];
+    expression = [...results.textContent + '='];
+    return;
+  }
+
+  expression.push(e.target.textContent);
   
   //if user inputs a second operator,
   //replace the first part of the expression with its solution
