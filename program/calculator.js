@@ -62,7 +62,7 @@ buttons.addEventListener('click', (e)=>{
     return;
   }
 
-  expression.push(e.target.textContent);
+  if (e.target.textContent != '='){ expression.push(e.target.textContent)};
   
   //if user inputs a second operator,
   //replace the first part of the expression with its solution
@@ -72,7 +72,7 @@ buttons.addEventListener('click', (e)=>{
   }
   
   //display the input
-  results.textContent = expression.join('');
+  results.textContent = expression.filter((a)=>(a != '=')).join('');
   
 });
 
