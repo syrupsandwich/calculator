@@ -40,6 +40,17 @@ buttons.addEventListener('click', (e)=>{
   //ignore the button container
   if (e.target.nodeName == 'DIV'){return};
 
+  //if display value is strictly a two term expression
+  //and the equals button is pressed,
+  //just solve the expression
+  if(checkExpression(expression)
+  && e.target.textContent == '='){
+    console.log(expression)
+    results.textContent = [operate(expression.join(''))];
+    expression = [];
+    return;
+  }
+
   expression.push(e.target.textContent);
 
   //if input is an operator
@@ -66,3 +77,9 @@ let clearBtn = document.querySelector('#clear');
 clearBtn.addEventListener('dblclick', (e)=>{
   results.textContent = '';
 });
+
+function checkExpression(array){
+  let operator = array.find((a)=>(checkIfOperator(a)));
+  let numbers = `${array}`.split(`${operator}`);
+  if (numbers.length == 2){ return true };
+}
