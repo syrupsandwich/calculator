@@ -80,6 +80,7 @@ let clearBtn = document.querySelector('#clear');
 
 clearBtn.addEventListener('dblclick', (e)=>{
   results.textContent = '';
+  expression = [];
 });
 
 function checkExpression(array){
