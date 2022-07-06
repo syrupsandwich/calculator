@@ -32,20 +32,27 @@ function checkIfOperator(a){
     a == '÷');
 }
 
+
 let results = document.querySelector('#results');
 let buttons = document.querySelector('.body');
 let expression = [];
+let term = [];
 
 buttons.addEventListener('click', (e)=>{
   //ignore the button container
   if (e.target.nodeName == 'DIV'){return};
+  
+  //limit each term to have one decimal point
+  if(term.some((a)=>(a == '.')) && e.target.textContent == '.'){ return };
+  term.push(e.target.textContent);
+  if(checkIfOperator(e.target.textContent) || e.target.textContent == '='){ term = [] };
 
   //clear the display after a finished calculation
   if(expression.slice(-1) == '=' && e.target.className == 'num'){expression = []};
   //allow user to work with previous value
   if(expression.slice(-1) == '=' && checkIfOperator(e.target.textContent)){expression.pop()};
 
-  //prevent repeated input of operators
+  //change operator instead of repeating
   if (checkIfOperator(e.target.textContent)
   && checkIfOperator(expression.slice(-1))){
     expression.pop();
@@ -87,7 +94,8 @@ let backSpaceBtn = document.querySelector('#backspace');
 
 backSpaceBtn.addEventListener('click', (e)=>{
   results.textContent = results.textContent.slice(0, -1);
-  expression = Array.from(results.textContent)
+  expression = Array.from(results.textContent);
+  term.pop();
 })
 
 function checkExpression(array){
