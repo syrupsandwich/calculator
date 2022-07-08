@@ -25,11 +25,7 @@ function operate(input){
 }
 
 function checkIfOperator(a){
-  return (
-    a == '+' ||
-    a == '−' ||
-    a == '×' ||
-    a == '÷');
+  return (a == '+' || a == '−' || a == '×' || a == '÷');
 }
 
 
@@ -41,35 +37,40 @@ let term = [];
 buttons.addEventListener('click', (e)=>{
   //ignore the button container
   if (e.target.nodeName == 'DIV'){return};
-  
+  storeInput(e.target.textContent);
+});
+
+let numeric = Array.from(document.querySelectorAll('.num'));
+
+function storeInput(input){
   //limit each term to have one decimal point
-  if(term.some((a)=>(a == '.')) && e.target.textContent == '.'){ return };
-  term.push(e.target.textContent);
-  if(checkIfOperator(e.target.textContent) || e.target.textContent == '='){ term = [] };
-
+  if(term.some((a)=>(a == '.')) && input == '.'){ return };
+  term.push(input);
+  if(checkIfOperator(input) || input == '='){ term = [] };
+  
   //clear the display after a finished calculation
-  if(expression.slice(-1) == '=' && e.target.className == 'num'){expression = []};
+  if(expression.slice(-1) == '=' && numeric.some((a)=>(input == a.textContent))){expression = []};
   //allow user to work with previous value
-  if(expression.slice(-1) == '=' && checkIfOperator(e.target.textContent)){expression.pop()};
-
+  if(expression.slice(-1) == '=' && checkIfOperator(input)){expression.pop()};
+  
   //change operator instead of repeating
-  if (checkIfOperator(e.target.textContent)
+  if (checkIfOperator(input)
   && checkIfOperator(expression.slice(-1))){
     expression.pop();
-    expression.push(e.target.textContent);
+    expression.push(input);
     results.textContent = expression.join('');
     return;
   }
-
+  
   //make equals solve a two term expression
   if(checkExpression(expression)
-  && e.target.textContent == '='){
+  && input == '='){
     results.textContent = [Math.round(operate(expression.join('')) * 100) / 100];
     expression = [...results.textContent + '='];
     return;
   }
-
-  if (e.target.textContent != '='){ expression.push(e.target.textContent)};
+  
+  if (input != '='){ expression.push(input)};
   
   //if user inputs a second operator,
   //replace the first part of the expression with its solution
@@ -80,26 +81,57 @@ buttons.addEventListener('click', (e)=>{
   
   //display the input
   results.textContent = expression.filter((a)=>(a != '=')).join('');
-  
-});
+
+}
 
 let clearBtn = document.querySelector('#clear');
 
 clearBtn.addEventListener('dblclick', (e)=>{
-  results.textContent = '';
-  expression = [];
+  clearDisplay();
 });
 
 let backSpaceBtn = document.querySelector('#backspace');
 
 backSpaceBtn.addEventListener('click', (e)=>{
-  results.textContent = results.textContent.slice(0, -1);
-  expression = Array.from(results.textContent);
-  term.pop();
+  removeLastCharacter();
 })
 
 function checkExpression(array){
   let operator = array.find((a)=>(checkIfOperator(a)));
   let numbers = `${array}`.split(`${operator}`);
   if (numbers.length == 2){ return true };
+}
+
+let calcKeys = ['1','2','3','4','5','6','7','8','9','0','.','=','+','-','*','/',];
+
+document.addEventListener('keydown', (e)=>{
+  if(calcKeys.some((a)=>(e.key == a))){
+    storeInput(`${filterInput(e.key)}`);
+  }else if(e.key == 'Backspace'){
+    removeLastCharacter();
+  }else if(e.key == 'Enter'){
+    e.preventDefault();
+    storeInput('=');
+  }else if(e.key == 'Escape'){
+    e.preventDefault();
+    clearDisplay();
+    }
+});
+
+function removeLastCharacter(){
+  results.textContent = results.textContent.slice(0, -1);
+  expression = Array.from(results.textContent);
+  term.pop();
+}
+
+function filterInput(string){
+  if(string == '*'){ return '×' }
+  else if(string == '/'){ return '÷' }
+  else if(string == '-'){ return '−' }
+  else { return string };
+}
+
+function clearDisplay(){
+  results.textContent = '';
+  expression = [];
 }
