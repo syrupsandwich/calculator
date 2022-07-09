@@ -17,7 +17,7 @@ body {
   border: 2px solid rgba(23, 75, 19, 0.37);
   border-radius: 20px;
   background-color: rgb(145, 145, 145);
-  width: 276px;
+  min-width: 276px;
   min-height: 398px;
   overflow: hidden;
   box-shadow: inset -4px -4px 5px rgba(84, 74, 95, 0.541),
